@@ -1048,3 +1048,4 @@ end
 
 -- Set the keymap
 vim.keymap.set('n', '<leader>gg', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
+-- zxc zxc
