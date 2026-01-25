@@ -1046,4 +1046,23 @@ end
 
 -- Set the keymap
 vim.keymap.set('n', '<leader>gg', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
--- zxc zxc
+
+local lazyjj = Terminal:new {
+  cmd = 'lazyjj',
+  dir = 'git_dir',
+  direction = 'float',
+  float_opts = {
+    border = 'double',
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd 'startinsert!'
+    vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+  end,
+}
+
+function _lazyjj_toggle()
+  lazyjj:toggle()
+end
+
+vim.keymap.set('n', '<leader>jj', '<cmd>lua _lazyjj_toggle()<CR>', { noremap = true, silent = true })
