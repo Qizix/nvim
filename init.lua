@@ -286,9 +286,7 @@ require('lazy').setup({
   {
     'jj-vcs/jj.nvim',
     config = function()
-      require('jj').setup {
-        -- Options like custom highlighting or statusline integration
-      }
+      require('jj').setup {}
     end,
   },
   -- lazy.nvim
