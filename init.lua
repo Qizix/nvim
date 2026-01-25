@@ -283,6 +283,8 @@ require('lazy').setup({
       },
     },
   },
+  -- lazy.nvim
+  { 'serhez/bento.nvim', opts = {} },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
