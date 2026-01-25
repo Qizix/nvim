@@ -283,23 +283,28 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'jj-vcs/jj.nvim',
+    config = function()
+      require('jj').setup {
+        -- Options like custom highlighting or statusline integration
+      }
+    end,
+  },
   -- lazy.nvim
   { 'serhez/bento.nvim', opts = {} },
-
-  -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-  --
-  -- This is often very useful to both group configuration, as well as handle
-  -- lazy loading plugins that don't need to be loaded immediately at startup.
-  --
-  -- For example, in the following configuration, we use:
-  --  event = 'VimEnter'
-  --
-  -- which loads which-key before all the UI elements are loaded. Events can be
-  -- normal autocommands events (`:help autocmd-events`).
-  --
-  -- Then, because we use the `opts` key (recommended), the configuration runs
-  -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-
+  {
+    'julienvincent/hunk.nvim',
+    cmd = { 'DiffEditor' },
+    config = function()
+      require('hunk').setup()
+    end,
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = true,
+  },
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -1022,5 +1027,24 @@ require('lazy').setup({
   },
 })
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new {
+  cmd = 'lazygit',
+  dir = 'git_dir',
+  direction = 'float',
+  float_opts = {
+    border = 'double',
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd 'startinsert!'
+    vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+  end,
+}
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+-- Set the keymap
+vim.keymap.set('n', '<leader>gg', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
