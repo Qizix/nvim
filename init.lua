@@ -283,12 +283,6 @@ require('lazy').setup({
       },
     },
   },
-  {
-    'jj-vcs/jj.nvim',
-    config = function()
-      require('jj').setup {}
-    end,
-  },
   -- lazy.nvim
   { 'serhez/bento.nvim', opts = {} },
   {
